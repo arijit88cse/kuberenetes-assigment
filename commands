@@ -1,0 +1,50 @@
+ubuntu@ip-172-31-45-21:~/kubernetes$ vi mongo-deploy.yaml
+ubuntu@ip-172-31-45-21:~/kubernetes$ vi nodejs-deploy.yaml
+ubuntu@ip-172-31-45-21:~/kubernetes$ vi nodejs-deploy.yaml
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl apply -f mongo-deploy.yaml
+deployment.apps/mongo created
+service/mongo created
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl  get po -A
+NAMESPACE              NAME                                         READY   STATUS              RESTARTS        AGE
+default                mongo-784fccf6fc-kn965                       0/1     ContainerCreating   0               9s
+kube-system            coredns-66bc5c9577-tpmzw                     1/1     Running             0               9m25s
+kube-system            etcd-minikube                                1/1     Running             0               9m30s
+kube-system            kube-apiserver-minikube                      1/1     Running             0               9m30s
+kube-system            kube-controller-manager-minikube             1/1     Running             0               9m30s
+kube-system            kube-proxy-7bmpd                             1/1     Running             0               9m26s
+kube-system            kube-scheduler-minikube                      1/1     Running             0               9m31s
+kube-system            storage-provisioner                          1/1     Running             1 (8m54s ago)   9m29s
+kubernetes-dashboard   dashboard-metrics-scraper-77bf4d6c4c-6l56t   1/1     Running             0               8m17s
+kubernetes-dashboard   kubernetes-dashboard-855c9754f9-qjnc6        1/1     Running             0               8m17s
+  
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl  get services
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP     9m37s
+mongo        ClusterIP   10.102.239.252   <none>        27017/TCP   15s
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl apply -f nodejs-deploy.yaml
+deployment.apps/nodejs-employee-app created
+service/nodejs-service created
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl  get services
+NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes       ClusterIP   10.96.0.1        <none>        443/TCP        9m52s
+mongo            ClusterIP   10.102.239.252   <none>        27017/TCP      30s
+nodejs-service   NodePort    10.103.207.225   <none>        80:30008/TCP   2s
+
+  
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl apply -f nodejs-deploy.yaml
+deployment.apps/nodejs-employee-app unchanged
+service/nodejs-service unchanged
+ubuntu@ip-172-31-45-21:~/kubernetes$ kubectl  get po -A
+NAMESPACE              NAME                                         READY   STATUS              RESTARTS        AGE
+default                mongo-784fccf6fc-kn965                       1/1     Running             0               36s
+default                nodejs-employee-app-689d5c88b5-c5b24         0/1     ContainerCreating   0               8s
+default                nodejs-employee-app-689d5c88b5-c9s7n         0/1     ContainerCreating   0               8s
+kube-system            coredns-66bc5c9577-tpmzw                     1/1     Running             0               9m52s
+kube-system            etcd-minikube                                1/1     Running             0               9m57s
+kube-system            kube-apiserver-minikube                      1/1     Running             0               9m57s
+kube-system            kube-controller-manager-minikube             1/1     Running             0               9m57s
+kube-system            kube-proxy-7bmpd                             1/1     Running             0               9m53s
+kube-system            kube-scheduler-minikube                      1/1     Running             0               9m58s
+kube-system            storage-provisioner                          1/1     Running             1 (9m21s ago)   9m56s
+kubernetes-dashboard   dashboard-metrics-scraper-77bf4d6c4c-6l56t   1/1     Running             0               8m44s
+kubernetes-dashboard   kubernetes-dashboard-855c9754f9-qjnc6        1/1     Running             0     

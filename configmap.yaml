@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+  labels:
+    app: mongodb
+data:
+  MONGO_DB: mpngodb
+  MONGO_USER: admin
+  MONGO_PASSWORD: test123

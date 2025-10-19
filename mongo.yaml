@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cps-mongo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cps-mongo-db
+  template:
+    metadata:
+      labels:
+        app: cps-mongo-db
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: mongo-config
+          volumeMounts:
+            - mountPath: /var/lib/mongodb/data
+              name: cps-mongo-db
+      volumes:
+        - name: cps-mongo-db
+          persistentVolumeClaim:
+            claimName: cps-mongo-db-claim
